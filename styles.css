@@ -1154,7 +1154,191 @@ body {
     color: var(--gold-2);
 }
 
+/* ==========================================================
+   Botón "Instalar app" + guía para iPhone
+   ========================================================== */
+
+.install-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.8rem 1.5rem;
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #1b1407;
+    background: var(--gold-grad);
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 12px 28px -10px rgba(217, 180, 108, 0.8);
+    transition: transform 0.35s var(--ease), box-shadow 0.35s;
+    animation: installPulse 2.8s ease-out infinite;
+}
+
+.install-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.install-btn:active { transform: scale(0.95); }
+
+.install-btn:focus-visible {
+    outline: 2px solid var(--gold-1);
+    outline-offset: 3px;
+}
+
+@media (hover: hover) {
+    .install-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 34px -10px rgba(217, 180, 108, 0.95);
+    }
+}
+
+/* En la portada: debajo del subtítulo */
+.install-btn--hero {
+    margin-top: 1.75rem;
+    animation: fadeUp 1s var(--ease) 0.8s both, installPulse 2.8s ease-out 2s infinite;
+}
+
+/* En el detalle: botón redondo con solo el ícono */
+.install-btn--compact {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.install-btn--compact span { display: none; }
+.install-btn--compact svg { width: 22px; height: 22px; }
+
+/* Guía para iPhone / iPad */
+.install-sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    background: rgba(5, 5, 8, 0.7);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    animation: sheetFade 0.3s ease both;
+}
+
+@media (min-width: 640px) {
+    .install-sheet { align-items: center; }
+}
+
+.install-sheet__card {
+    width: 100%;
+    max-width: 420px;
+    padding: 1.75rem 1.5rem 1.5rem;
+    border-radius: 28px;
+    background: linear-gradient(160deg, rgba(34, 32, 42, 0.98), rgba(16, 16, 21, 0.98));
+    border: 1px solid rgba(217, 180, 108, 0.35);
+    box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.95), 0 0 60px -20px rgba(217, 180, 108, 0.35);
+    animation: sheetUp 0.5s var(--ease) both;
+}
+
+.install-sheet__card h2 {
+    font-family: var(--font-display);
+    font-size: 1.9rem;
+    font-weight: 600;
+    line-height: 1.1;
+}
+
+.install-sheet__lead {
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+    color: var(--text-soft);
+}
+
+.install-sheet__steps {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+    margin: 1.4rem 0 1rem;
+}
+
+.install-sheet__steps li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    color: var(--text-soft);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.install-sheet__steps strong { color: var(--text); }
+
+.install-sheet__ico {
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    color: var(--gold-2);
+    background: rgba(217, 180, 108, 0.1);
+    border: 1px solid rgba(217, 180, 108, 0.3);
+    border-radius: 12px;
+}
+
+.install-sheet__ico svg { width: 22px; height: 22px; }
+
+.install-sheet__note {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+.install-sheet__close {
+    width: 100%;
+    margin-top: 1.25rem;
+    padding: 0.95rem 1rem;
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #1b1407;
+    background: var(--gold-grad);
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+}
+
+.install-sheet__close:focus-visible {
+    outline: 2px solid var(--gold-1);
+    outline-offset: 3px;
+}
+
 /* ---------- Animaciones ---------- */
+
+@keyframes installPulse {
+    0%   { box-shadow: 0 12px 28px -10px rgba(217, 180, 108, 0.8), 0 0 0 0 rgba(217, 180, 108, 0.45); }
+    70%  { box-shadow: 0 12px 28px -10px rgba(217, 180, 108, 0.8), 0 0 0 16px rgba(217, 180, 108, 0); }
+    100% { box-shadow: 0 12px 28px -10px rgba(217, 180, 108, 0.8), 0 0 0 0 rgba(217, 180, 108, 0); }
+}
+
+@keyframes sheetFade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes sheetUp {
+    from { opacity: 0; transform: translateY(40px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
 
 @keyframes riseFade {
     from { opacity: 0; translate: 0 24px; }

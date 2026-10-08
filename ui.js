@@ -175,6 +175,147 @@
 
   window.DecantUI = { renderImage };
 
+  /* ---------- Botón "Instalar app" (PC y móvil) ----------
+       - Chrome / Edge / Android: usa el aviso nativo de instalación.
+       - iPhone / iPad: no existe instalación automática, así que
+         abre una pequeña guía (Compartir > Agregar a pantalla de inicio).
+       - Si la app ya está instalada o el navegador no puede instalar,
+         el botón no aparece. */
+  function setupInstall() {
+    const isStandalone =
+      window.matchMedia("(display-mode: standalone)").matches ||
+      window.navigator.standalone === true;
+    if (isStandalone) return;
+
+    const ua = navigator.userAgent || "";
+    const isIOS =
+      /iphone|ipad|ipod/i.test(ua) ||
+      (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+
+    const ICON =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<path d="M12 3v12"/><path d="m7 11 5 5 5-5"/><path d="M5 21h14"/></svg>';
+    const SHARE =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<path d="M12 15V3"/><path d="m8 7 4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>';
+    const PLUS =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" ' +
+      'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8v8M8 12h8"/></svg>';
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "install-btn hidden";
+    btn.setAttribute("aria-label", "Instalar app");
+    btn.innerHTML = ICON + "<span>Instalar app</span>";
+
+    /* Dónde se coloca el botón */
+    const detailBar = document.querySelector(".header-detail");
+    if (detailBar) {
+      btn.classList.add("install-btn--compact");
+      const spacer = detailBar.lastElementChild;
+      if (spacer && spacer.tagName === "DIV" && !spacer.className) {
+        spacer.style.display = "flex";
+        spacer.style.justifyContent = "flex-end";
+        spacer.appendChild(btn); // el contenedor conserva su ancho: el logo no se mueve
+      } else {
+        detailBar.appendChild(btn);
+      }
+    } else {
+      const hero = document.querySelector(".header");
+      if (!hero) return;
+      btn.classList.add("install-btn--hero");
+      const cue = hero.querySelector(".scroll-cue");
+      hero.insertBefore(btn, cue || null);
+    }
+
+    const show = () => btn.classList.remove("hidden");
+    const hide = () => btn.classList.add("hidden");
+
+    /* Guía para iPhone / iPad */
+    let sheet = null;
+    let lastFocus = null;
+    const closeSheet = () => {
+      if (!sheet) return;
+      sheet.remove();
+      sheet = null;
+      document.removeEventListener("keydown", onKey);
+      if (lastFocus) lastFocus.focus();
+    };
+    const onKey = (e) => {
+      if (e.key === "Escape") closeSheet();
+    };
+    const openSheet = () => {
+      if (sheet) return;
+      lastFocus = document.activeElement;
+      sheet = document.createElement("div");
+      sheet.className = "install-sheet";
+      sheet.innerHTML =
+        '<div class="install-sheet__card" role="dialog" aria-modal="true" aria-labelledby="installTitle">' +
+        '<h2 id="installTitle">Instala Decants en tu iPhone</h2>' +
+        '<p class="install-sheet__lead">Así la abres como una app, a pantalla completa.</p>' +
+        '<ol class="install-sheet__steps">' +
+        '<li><span class="install-sheet__ico">' +
+        SHARE +
+        "</span><span>Toca el botón <strong>Compartir</strong> en la barra de Safari.</span></li>" +
+        '<li><span class="install-sheet__ico">' +
+        PLUS +
+        "</span><span>Elige <strong>Agregar a pantalla de inicio</strong> y confirma.</span></li>" +
+        "</ol>" +
+        '<p class="install-sheet__note">Si no ves la opción, abre esta página en Safari.</p>' +
+        '<button type="button" class="install-sheet__close">Entendido</button>' +
+        "</div>";
+      document.body.appendChild(sheet);
+      sheet.addEventListener("click", (e) => {
+        if (e.target === sheet) closeSheet();
+      });
+      sheet
+        .querySelector(".install-sheet__close")
+        .addEventListener("click", closeSheet);
+      sheet.querySelector(".install-sheet__close").focus();
+      document.addEventListener("keydown", onKey);
+    };
+
+    /* Instalación nativa (Chrome, Edge, Android) */
+    let deferred = null;
+    window.addEventListener("beforeinstallprompt", (e) => {
+      e.preventDefault();
+      deferred = e;
+      show();
+    });
+    window.addEventListener("appinstalled", () => {
+      deferred = null;
+      hide();
+      closeSheet();
+    });
+
+    btn.addEventListener("click", async () => {
+      if (deferred) {
+        const promptEvent = deferred;
+        deferred = null; // el aviso solo se puede usar una vez
+        hide();
+        try {
+          promptEvent.prompt();
+          await promptEvent.userChoice;
+        } catch (err) {
+          /* el usuario cerró el aviso */
+        }
+        return;
+      }
+      if (isIOS) openSheet();
+    });
+
+    if (isIOS) show();
+  }
+
+  try {
+    setupInstall();
+  } catch (err) {
+    console.warn("Botón de instalar no disponible:", err);
+  }
+
   /* En páginas sin catálogo (ej. detail.html) solo se expone renderImage */
   if (!grid) return;
 

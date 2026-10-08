@@ -1,4 +1,4 @@
-const CACHE_NAME = "decants-v3";
+const CACHE_NAME = "decants-v4";
 const STATIC_ASSETS = [
   "/",
   "/index.html",
