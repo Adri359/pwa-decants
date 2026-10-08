@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#09090c" />
+    <meta name="color-scheme" content="dark" />
+    <title>Detalle - Decants Perfumes</title>
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/svg+xml" href="icon.svg" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Decants" />
+  </head>
+  <body>
+    <!-- Fondo animado -->
+    <div class="ambient" aria-hidden="true">
+      <span class="orb orb-1"></span>
+      <span class="orb orb-2"></span>
+      <span class="orb orb-3"></span>
+      <span class="grain"></span>
+    </div>
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <header class="header header-detail">
+      <a href="index.html" class="back-btn" aria-label="Volver">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7" />
+        </svg>
+      </a>
+      <div class="logo">
+        <svg
+          class="logo-icon"
+          viewBox="0 0 64 64"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="32"
+            cy="24"
+            r="12"
+            stroke="currentColor"
+            stroke-width="2.5"
+          />
+          <path
+            d="M32 36 L32 46"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          />
+          <circle cx="32" cy="46" r="4" fill="currentColor" />
+          <ellipse
+            cx="32"
+            cy="52"
+            rx="14"
+            ry="5"
+            fill="currentColor"
+            opacity="0.2"
+          />
+        </svg>
+        <span class="logo-text">Decants</span>
+      </div>
+      <div style="width: 48px"></div>
+    </header>
+
+    <main class="main detail-main">
+      <article id="perfumeDetail" class="detail-card">
+        <div class="detail-hero">
+          <div class="detail-image" id="detailImage"></div>
+          <div class="detail-badge" id="detailCategory"></div>
+        </div>
+        <div class="detail-content">
+          <div class="detail-header">
+            <p class="detail-brand" id="detailBrand"></p>
+            <h1 class="detail-name" id="detailName"></h1>
+            <div class="detail-meta-row">
+              <span
+                class="detail-concentration"
+                id="detailConcentration"
+              ></span>
+              <span class="detail-volume" id="detailVolume"></span>
+              <span class="detail-year" id="detailYear"></span>
+            </div>
+            <div class="detail-price-row">
+              <span class="detail-price" id="detailPrice"></span>
+              <div class="detail-rating" id="detailRating"></div>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h2 class="detail-section-title">Descripción</h2>
+            <p class="detail-description" id="detailDescription"></p>
+          </div>
+
+          <div class="detail-section">
+            <h2 class="detail-section-title">Pirámide Olfativa</h2>
+            <div class="notes-grid">
+              <div class="note-column">
+                <h3 class="note-title">Notas de Salida</h3>
+                <p class="note-list" id="detailTopNotes"></p>
+              </div>
+              <div class="note-column">
+                <h3 class="note-title">Notas de Corazón</h3>
+                <p class="note-list" id="detailHeartNotes"></p>
+              </div>
+              <div class="note-column">
+                <h3 class="note-title">Notas de Fondo</h3>
+                <p class="note-list" id="detailBaseNotes"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <h2 class="detail-section-title">Información</h2>
+            <dl class="detail-info">
+              <div class="info-row">
+                <dt>Perfumista</dt>
+                <dd id="detailPerfumer"></dd>
+              </div>
+              <div class="info-row">
+                <dt>Año de lanzamiento</dt>
+                <dd id="detailYearInfo"></dd>
+              </div>
+              <div class="info-row">
+                <dt>Concentración</dt>
+                <dd id="detailConcentrationInfo"></dd>
+              </div>
+              <div class="info-row">
+                <dt>Categoría</dt>
+                <dd id="detailCategoryInfo"></dd>
+              </div>
+              <div class="info-row">
+                <dt>Volumen del decant</dt>
+                <dd id="detailVolumeInfo"></dd>
+              </div>
+            </dl>
+          </div>
+
+          <button class="btn-comprar btn-comprar-large" id="detailBuyBtn">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            Agregar al carrito
+          </button>
+        </div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <p class="footer-note">
+        Los decants son muestras de perfumes originales transferidas a frascos
+        de 5ml
+      </p>
+      <p class="footer-copy">
+        &copy; 2025 Decants Perfumes. Hecho con pasión por la perfumería.
+      </p>
+    </footer>
+
+    <div id="toast" class="toast hidden" role="alert" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+    <script src="detail.js"></script>
+    <script src="ui.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("sw.js")
+          .then((reg) => console.log("SW registrado:", reg.scope))
+          .catch((err) => console.log("SW error:", err));
+      }
+    </script>
+  </body>
+</html>

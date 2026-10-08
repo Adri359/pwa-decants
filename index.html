@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Decants de perfumes - Compra muestras de perfumes originales"
+    />
+    <meta name="theme-color" content="#09090c" />
+    <meta name="color-scheme" content="dark" />
+    <title>Decants Perfumes</title>
+    <link rel="manifest" href="manifest.json" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/svg+xml" href="icon.svg" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Decants" />
+  </head>
+  <body>
+    <!-- Fondo animado -->
+    <div class="ambient" aria-hidden="true">
+      <span class="orb orb-1"></span>
+      <span class="orb orb-2"></span>
+      <span class="orb orb-3"></span>
+      <span class="grain"></span>
+    </div>
+    <div class="scroll-progress" aria-hidden="true"></div>
+
+    <header class="header">
+      <span class="eyebrow">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2l2.2 6.8L21 11l-6.8 2.2L12 20l-2.2-6.8L3 11l6.8-2.2z" />
+        </svg>
+        Colección de decants
+      </span>
+      <h1>
+        <span class="line"><span>Decants</span></span>
+        <span class="line"
+          ><span><em>Perfumes</em></span></span
+        >
+      </h1>
+      <p class="subtitle">Muestras originales de tus fragancias favoritas</p>
+      <span class="scroll-cue" aria-hidden="true"></span>
+    </header>
+
+    <main class="main">
+      <section class="search-section">
+        <div class="search-container">
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Buscar por nombre, marca o nota..."
+            autocomplete="off"
+            aria-label="Buscar decants"
+          />
+          <span class="search-icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+          </span>
+        </div>
+        <div class="filters">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="hombre">Hombre</button>
+          <button class="filter-btn" data-filter="mujer">Mujer</button>
+          <button class="filter-btn" data-filter="unisex">Unisex</button>
+        </div>
+      </section>
+
+      <section class="results-section">
+        <p id="resultsCount" class="results-count">Cargando decants...</p>
+
+        <!-- Placeholder de carga: ui.js lo oculta cuando llegan los decants -->
+        <div id="skeletonGrid" class="skeleton-grid" aria-hidden="true">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+
+        <div id="decantsGrid" class="decants-grid"></div>
+        <p id="noResults" class="no-results hidden">
+          No se encontraron decants
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="install">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="6.5" y="2.5" width="11" height="19" rx="3" />
+          <path d="M10.5 18.5h3" />
+        </svg>
+        Instala esta app en tu móvil para acceso rápido
+      </p>
+      <small
+        >Los decants son muestras de perfumes originales transferidas a frascos
+        más pequeños</small
+      >
+    </footer>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script src="app.js"></script>
+    <script src="ui.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("sw.js")
+          .then((reg) => console.log("SW registrado:", reg.scope))
+          .catch((err) => console.log("SW error:", err));
+      }
+    </script>
+  </body>
+</html>

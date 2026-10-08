@@ -1,0 +1,38 @@
+{
+    "name": "Decants Perfumes",
+    "short_name": "Decants",
+    "description": "Compra decants de perfumes originales - Muestras de 5ml de tus fragancias favoritas",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0d0d12",
+    "theme_color": "#1a1a2e",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "lang": "es",
+    "icons": [
+        {
+            "src": "icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["shopping", "lifestyle"],
+    "screenshots": [],
+    "shortcuts": [
+        {
+            "name": "Ver Hombre",
+            "short_name": "Hombre",
+            "description": "Ver decants para hombre",
+            "url": "/?filter=hombre",
+            "icons": [{ "src": "icon.svg", "sizes": "any" }]
+        },
+        {
+            "name": "Ver Mujer",
+            "short_name": "Mujer",
+            "description": "Ver decants para mujer",
+            "url": "/?filter=mujer",
+            "icons": [{ "src": "icon.svg", "sizes": "any" }]
+        }
+    ]
+}
