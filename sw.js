@@ -1,4 +1,4 @@
-const CACHE_NAME = "decants-v2";
+const CACHE_NAME = "decants-v3";
 const STATIC_ASSETS = [
   "/",
   "/index.html",
@@ -9,6 +9,10 @@ const STATIC_ASSETS = [
   "/ui.js",
   "/manifest.json",
   "/icon.svg",
+  "/icon-180.png",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/icon-maskable-512.png",
 ];
 
 self.addEventListener("install", (event) => {
